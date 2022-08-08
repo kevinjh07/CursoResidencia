@@ -1,0 +1,13 @@
+apiVersion: core.oam.dev/v1beta1
+kind: Application
+metadata:
+  name: curso-residencia
+  namespace: default
+spec:
+  components:
+    - name: curso-residencia
+      type: microservice
+      properties:
+        accountId: ""
+        image: 
+        targetPort: 5001

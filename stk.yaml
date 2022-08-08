@@ -1,0 +1,11 @@
+applied_templates:
+- inputs: {}
+  template_data_path: mind-dotnet-api-stack/dotnet-api-template
+global_computed_inputs:
+  project_type: Api
+  src_base_path: ''
+global_inputs:
+  framework: net6.0
+  project_name: CursoResidencia
+stack: mind-dotnet-api-stack
+stack_type: app
