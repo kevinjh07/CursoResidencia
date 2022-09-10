@@ -1,5 +1,4 @@
 using CursoResidencia.Domain.Interfaces.Services;
-using CursoResidencia.Domain.Models;
 
 namespace CursoResidencia.Infrastructure.Services
 {
