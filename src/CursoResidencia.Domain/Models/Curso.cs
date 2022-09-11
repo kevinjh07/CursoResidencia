@@ -21,4 +21,14 @@ public class Curso
         DataCadastro = DateTime.Now;
         Situacao = Situacao.Ativo;
     }
+
+    public Curso(int id, string nome, DateTime dataCadastro, DateTime dataInicio, DateTime dataFim, Situacao situacao)
+    {
+        Id = id;
+        Nome = nome;
+        DataCadastro = dataCadastro;
+        DataInicio = dataInicio;
+        DataFim = dataFim;
+        Situacao = situacao;
+    }
 }

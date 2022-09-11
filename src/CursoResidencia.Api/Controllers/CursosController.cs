@@ -1,5 +1,6 @@
 ﻿using CursoResidencia.Application.CreateCurso;
 using CursoResidencia.Application.Exceptions;
+using CursoResidencia.Application.UpdateCurso;
 using CursoResidencia.Domain.Models;
 using CursoResidencia.Domain.Repository;
 using Microsoft.AspNetCore.Authorization;
@@ -39,7 +40,7 @@ public class CursosController : ControllerBase
 
     [HttpGet]
     [ProducesResponseType(typeof(IEnumerable<Curso>), (int)HttpStatusCode.OK)]
-    [ProducesResponseType((int)HttpStatusCode.NoContent)]
+    [ProducesResponseType(typeof(StackSpot.ErrorHandler.HttpResponse), (int)HttpStatusCode.NoContent)]
     public IActionResult Get()
     {
         var cursos = _cursoRepository.GetAll();
@@ -49,5 +50,28 @@ public class CursosController : ControllerBase
         }
 
         return Ok(cursos);
+    }
+
+    [HttpPut("{id}")]
+    [ProducesResponseType(typeof(StackSpot.ErrorHandler.HttpResponse), (int)HttpStatusCode.NoContent)]
+    [ProducesResponseType(typeof(StackSpot.ErrorHandler.HttpResponse), (int)HttpStatusCode.BadRequest)]
+    [ProducesResponseType(typeof(StackSpot.ErrorHandler.HttpResponse), (int)HttpStatusCode.UnprocessableEntity)]
+    public async Task<IActionResult> Put(int id, [FromBody] UpdateCursoCommand command)
+    {
+        command.Id = id;
+
+        try
+        {
+            await _mediator.Send(command);
+            return NoContent();
+        }
+        catch (NotFoundException)
+        {
+            return NotFound();
+        }
+        catch (UnprocessableEntityException e)
+        {
+            return UnprocessableEntity(new { message = e.Message });
+        }
     }
 }
