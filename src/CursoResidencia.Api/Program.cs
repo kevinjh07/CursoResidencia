@@ -14,6 +14,9 @@ using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection;
+using CursoResidencia.Domain.Repository;
+using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +32,7 @@ builder.Services.AddControllers()
        .AddJsonOptions(x =>
        {
            x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+           x.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
        });
 
 builder.Services.AddSwaggerGen(c =>
@@ -90,6 +94,7 @@ builder.Services.Configure<IdentityOptions>(options =>
 builder.Services.AddScoped<RoleManager<IdentityRole<int>>>();
 builder.Services.AddScoped<UserManager<ApplicationUser>>();
 builder.Services.AddScoped<IHelloWorldService, HelloWorldService>();
+builder.Services.AddScoped<ICursoRepository, CursoRepository>();
 
 var app = builder.Build();
 

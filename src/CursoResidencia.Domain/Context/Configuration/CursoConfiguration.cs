@@ -22,9 +22,6 @@ public class CursoConfiguration : IEntityTypeConfiguration<Curso>
         builder.Property(c => c.Situacao)
             .IsRequired();
 
-        builder.Property(c => c.Imagem)
-            .HasMaxLength(200);
-
         builder.Property(c => c.DataCadastro)
             .HasColumnType("Date");
 

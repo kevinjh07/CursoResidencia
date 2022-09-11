@@ -9,5 +9,4 @@ public class ApplicationUser : IdentityUser<int>
     public Aluno Aluno { get; set; }
     public Professor Professor { get; set; }
     public DateTime? UltimoLogin { get; set; }
-    public ICollection<RefreshToken> RefreshTokens { get; set; }
 }

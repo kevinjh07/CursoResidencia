@@ -26,6 +26,4 @@ public class Aluno
     public string DeviceId { get; set; }
     public ICollection<VisualizacaoAula> VisualizacaoAula { get; set; }
     public ICollection<Simulado> Simulados { get; set; }
-    public ICollection<AlunoPlano> AlunoPlanos { get; set; }
-    public ICollection<AlunoPodcast> AlunoPodcasts { get; set; }
 }

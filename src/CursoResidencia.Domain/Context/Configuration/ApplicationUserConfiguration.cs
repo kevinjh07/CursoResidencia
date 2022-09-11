@@ -15,8 +15,5 @@ public class ApplicationUserConfiguration : IEntityTypeConfiguration<Application
         builder
             .Property(u => u.Situacao)
             .IsRequired();
-
-        builder.HasMany(u => u.RefreshTokens)
-            .WithOne(rt => rt.User);
     }
 }
