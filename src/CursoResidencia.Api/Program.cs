@@ -13,10 +13,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.Extensions.DependencyInjection;
 using CursoResidencia.Domain.Repository;
-using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
