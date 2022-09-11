@@ -9,6 +9,10 @@ using CursoResidencia.Domain.Models;
 using CursoResidencia.Infrastructure.Services;
 using CursoResidencia.Domain.Interfaces.Services;
 using CursoResidencia.Domain.Context;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Text;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,10 +41,54 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole<int>>()
                 .AddEntityFrameworkStores<ApplicationContext>()
                 .AddDefaultTokenProviders();
 
+builder.Services.Configure<DataProtectionTokenProviderOptions>(options =>
+{
+    options.TokenLifespan = TimeSpan.FromHours(3);
+});
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options =>
+{
+    options.RequireHttpsMetadata = false;
+    options.SaveToken = true;
+    var secret = /*appSettingsSection.Get<AppSettings>().Secret;*/ "rJMqOvic61jeG9rwULfmMHJwZ7Kws4xeTPcqj2p1TFP42EZrUU86jq18zecn4Is";
+    var key = Encoding.ASCII.GetBytes(secret);
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(key),
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        ClockSkew = TimeSpan.Zero
+    };
+});
+
+builder.Services.AddAuthorization(auth =>
+{
+    auth.AddPolicy("Bearer", new AuthorizationPolicyBuilder()
+        .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
+        .RequireAuthenticatedUser().Build());
+});
+
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    options.SignIn.RequireConfirmedEmail = true;
+
+    options.User.RequireUniqueEmail = true;
+    options.User.AllowedUserNameCharacters = null;
+
+    options.Password.RequireDigit = false;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireUppercase = false;
+});
+
 builder.Services.AddScoped<RoleManager<IdentityRole<int>>>();
 builder.Services.AddScoped<UserManager<ApplicationUser>>();
 builder.Services.AddScoped<IHelloWorldService, HelloWorldService>();
-builder.Services.AddMvc();
 
 var app = builder.Build();
 
@@ -55,8 +103,12 @@ app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CursoReside
 app.UseHealthChecks("/health");
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
+
 app.UseErrorHandler();
 app.UseRouting();
+
+app.UseAuthorization();
 
 app.MapControllers();
 
@@ -76,7 +128,7 @@ static async Task CreateRolesAsync(RoleManager<IdentityRole<int>> roleManager)
 {
     string[] roleNames =
     {
-        "Administrador", "Aluno", "Professor"
+        "Administrador", "Aluno"
     };
     foreach (var role in roleNames)
     {

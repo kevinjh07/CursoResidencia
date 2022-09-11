@@ -1,6 +1,6 @@
-namespace CursoResidencia.Domain.Models.Dto;
+﻿namespace CursoResidencia.Application.Auth;
 
-public class LoginResponse
+public class AuthResponse
 {
     public string Token { get; set; }
     public DateTimeOffset Expiration { get; set; }

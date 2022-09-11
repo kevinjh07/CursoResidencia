@@ -1,6 +1,6 @@
 using System.Runtime.Serialization;
 
-namespace CursoResidencia.Api.Exceptions;
+namespace CursoResidencia.Application.Exceptions;
 
 [Serializable]
 public class ForbidException : Exception
