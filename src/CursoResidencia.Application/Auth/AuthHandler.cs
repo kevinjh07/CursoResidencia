@@ -15,7 +15,6 @@ public class AuthHandler : IRequestHandler<AuthCommand, AuthResult>
     private readonly IMapper _mapper;
     //private readonly IHelloWorldService _helloWorldService;
     private readonly UserManager<ApplicationUser> _userManager;
-    //private readonly IOptions<AppSettings> _appSettings;
     private readonly ApplicationContext _context;
 
     public AuthHandler(ILogger<AuthHandler> logger,
@@ -33,7 +32,6 @@ public class AuthHandler : IRequestHandler<AuthCommand, AuthResult>
 
     public async Task<AuthResult> Handle(AuthCommand request, CancellationToken cancellationToken)
     {
-        //var response = await _helloWorldService.Create(request.UserName, (int)request.Level);
         var response = await LoginAsync(request);
 
         return _mapper.Map<AuthResult>(response);
@@ -57,10 +55,10 @@ public class AuthHandler : IRequestHandler<AuthCommand, AuthResult>
             .Include(u => u.Aluno)
             .SingleOrDefault(u => u.Email == email);
 
-        //if (user == null)
-        //{
-        //    throw new NotFoundException("Usuário não encontrado!");
-        //}
+        if (user == null)
+        {
+            throw new NotFoundException("Usuário não encontrado!");
+        }
 
         return user;
     }
@@ -74,7 +72,7 @@ public class AuthHandler : IRequestHandler<AuthCommand, AuthResult>
 
         if (user.Situacao == Situacao.Inativo)
         {
-            //throw new UnprocessableEntityException("Usuário inativo, entre em contato o administrador do sistema");
+            throw new UnprocessableEntityException("Usuário inativo, entre em contato o administrador do sistema");
         }
     }
 
@@ -85,20 +83,14 @@ public class AuthHandler : IRequestHandler<AuthCommand, AuthResult>
         var tokenHandler = new JwtSecurityTokenHandler();
         var securityToken = tokenHandler.CreateToken(tokenDescriptor);
         var token = tokenHandler.WriteToken(securityToken);
-        var refreshToken = GenerateRefreshToken(user);
 
-        return new AuthResponse
-        {
-            Token = token,
-            RefreshToken = refreshToken.Token,
-            Expiration = DateTimeOffset.Now.AddMinutes(120)
-        };
+        return new AuthResponse(token,DateTimeOffset.Now.AddMinutes(120));
     }
 
     private SecurityTokenDescriptor GetSecurityTokenDescriptor(ApplicationUser user, IEnumerable<string> role)
     {
         var options = new IdentityOptions();
-        var chars = /*_appSettings.Value.Secret;*/ "rJMqOvic61jeG9rwULfmMHJwZ7Kws4xeTPcqj2p1TFP42EZrUU86jq18zecn4Is";
+        var chars = "rJMqOvic61jeG9rwULfmMHJwZ7Kws4xeTPcqj2p1TFP42EZrUU86jq18zecn4Is";
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(chars));
         var tokenDescriptor = new SecurityTokenDescriptor
         {
@@ -111,20 +103,5 @@ public class AuthHandler : IRequestHandler<AuthCommand, AuthResult>
             SigningCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature)
         };
         return tokenDescriptor;
-    }
-
-    private RefreshToken GenerateRefreshToken(ApplicationUser user)
-    {
-        var refreshToken = new RefreshToken
-        {
-            User = user,
-            Token = Guid.NewGuid().ToString().Replace("-", string.Empty),
-            Expiration = DateTime.UtcNow.AddMinutes(150)
-        };
-
-        _context.RefreshTokens.Add(refreshToken);
-        _context.SaveChanges();
-
-        return refreshToken;
     }
 }

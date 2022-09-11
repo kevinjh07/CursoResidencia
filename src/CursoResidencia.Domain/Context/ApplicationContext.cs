@@ -20,7 +20,6 @@ public class ApplicationContext : IdentityDbContext<IdentityUser<int>, IdentityR
     public DbSet<AlunoPlano> AlunoPlanos { get; set; }
     public DbSet<VisualizacaoAula> VisualizacaoAulas { get; set; }
     public DbSet<AlunoPodcast> AlunoPodcasts { get; set; }
-    public DbSet<RefreshToken> RefreshTokens { get; set; }
     public DbSet<SimuladoQuestaoProva> SimuladoQuestoesProva { get; set; }
 
     public ApplicationContext(DbContextOptions<ApplicationContext> options)
@@ -46,7 +45,6 @@ public class ApplicationContext : IdentityDbContext<IdentityUser<int>, IdentityR
         builder.ApplyConfiguration(new RespostaQuestaoSimuladoConfiguration());
         builder.ApplyConfiguration(new ApplicationUserConfiguration());
         builder.ApplyConfiguration(new PodcastConfiguration());
-        builder.ApplyConfiguration(new RefreshTokenConfiguration());
         builder.ApplyConfiguration(new SimuladoQuestaoProvaConfiguration());
     }
 }

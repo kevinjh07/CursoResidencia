@@ -1,6 +1,4 @@
-﻿using CursoResidencia.Application.CreateHelloWorld;
-
-namespace CursoResidencia.Application.Auth;
+﻿namespace CursoResidencia.Application.Auth;
 
 public class AuthCommand : IRequest<AuthResult>
 {

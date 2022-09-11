@@ -37,19 +37,4 @@ public class AuthController : ControllerBase
             return NotFound();
         }
     }
-
-    //[HttpPost]
-    //[Route("refresh")]
-    //public async Task<IActionResult> Refresh([FromBody] RefreshRequest request)
-    //{
-    //    try
-    //    {
-    //        var loginResponse = await _authService.Refresh(request);
-    //        return Ok(loginResponse);
-    //    }
-    //    catch (SecurityTokenException e)
-    //    {
-    //        return UnprocessableEntity(new { message = e.Message });
-    //    }
-    //}
 }

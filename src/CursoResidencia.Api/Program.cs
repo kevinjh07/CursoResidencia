@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -54,7 +55,7 @@ builder.Services.AddAuthentication(options =>
 {
     options.RequireHttpsMetadata = false;
     options.SaveToken = true;
-    var secret = /*appSettingsSection.Get<AppSettings>().Secret;*/ "rJMqOvic61jeG9rwULfmMHJwZ7Kws4xeTPcqj2p1TFP42EZrUU86jq18zecn4Is";
+    var secret = "rJMqOvic61jeG9rwULfmMHJwZ7Kws4xeTPcqj2p1TFP42EZrUU86jq18zecn4Is";
     var key = Encoding.ASCII.GetBytes(secret);
     options.TokenValidationParameters = new TokenValidationParameters
     {
@@ -114,15 +115,22 @@ app.MapControllers();
 
 app.UseStackSpot(builder.Configuration, builder.Environment);
 
-using (var scope = app.Services.CreateScope())
+await SeedDatabase(app);
+
+app.Run();
+
+static async Task SeedDatabase(WebApplication app)
 {
+    using var scope = app.Services.CreateScope();
+    var context = scope.ServiceProvider.GetRequiredService<ApplicationContext>();
+    context.Database.EnsureCreated();
+    context.Database.Migrate();
+
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole<int>>>();
     await CreateRolesAsync(roleManager);
     await CreateDefaultAdminAsync(userManager);
 }
-
-app.Run();
 
 static async Task CreateRolesAsync(RoleManager<IdentityRole<int>> roleManager)
 {
