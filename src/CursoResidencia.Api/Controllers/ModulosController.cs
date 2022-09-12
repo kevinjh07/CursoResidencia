@@ -1,6 +1,7 @@
 ﻿using CursoResidencia.Application.CreateModulo;
 using CursoResidencia.Application.Exceptions;
 using CursoResidencia.Domain.Models;
+using CursoResidencia.Domain.Repository;
 using Microsoft.AspNetCore.Authorization;
 
 namespace CursoResidencia.Api.Controllers;
@@ -11,10 +12,12 @@ namespace CursoResidencia.Api.Controllers;
 public class ModulosController : ControllerBase
 {
     private readonly IMediator _mediator;
+    private readonly IModuloRepository _moduloRepository;
 
-    public ModulosController(IMediator mediator)
+    public ModulosController(IMediator mediator, IModuloRepository moduloRepository)
     {
         _mediator = mediator;
+        _moduloRepository = moduloRepository;
     }
 
     [HttpPost]
@@ -36,10 +39,16 @@ public class ModulosController : ControllerBase
 
     [HttpGet("{id}")]
     [ProducesResponseType(typeof(Modulo), (int)HttpStatusCode.OK)]
-    [ProducesResponseType(typeof(StackSpot.ErrorHandler.HttpResponse), (int)HttpStatusCode.NoContent)]
+    [ProducesResponseType(typeof(StackSpot.ErrorHandler.HttpResponse), (int)HttpStatusCode.NotFound)]
     public IActionResult Get([FromRoute] int id)
     {
-        return Ok();
+        var modulo = _moduloRepository.GetById(id);
+        if (modulo == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(modulo);
     }
 
     [HttpGet]
@@ -47,6 +56,12 @@ public class ModulosController : ControllerBase
     [ProducesResponseType(typeof(StackSpot.ErrorHandler.HttpResponse), (int)HttpStatusCode.NoContent)]
     public IActionResult GetAll()
     {
-        return Ok();
+        var modulos = _moduloRepository.GetAll();
+        if (!modulos.Any())
+        {
+            return NoContent();
+        }
+
+        return Ok(modulos);
     }
 }

@@ -92,6 +92,7 @@ builder.Services.AddScoped<RoleManager<IdentityRole<int>>>();
 builder.Services.AddScoped<UserManager<ApplicationUser>>();
 builder.Services.AddScoped<IHelloWorldService, HelloWorldService>();
 builder.Services.AddScoped<ICursoRepository, CursoRepository>();
+builder.Services.AddScoped<IModuloRepository, ModuloRepository>();
 
 var app = builder.Build();
 
