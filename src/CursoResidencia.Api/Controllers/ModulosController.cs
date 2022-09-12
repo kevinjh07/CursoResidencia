@@ -1,5 +1,6 @@
 ﻿using CursoResidencia.Application.CreateModulo;
 using CursoResidencia.Application.Exceptions;
+using CursoResidencia.Application.UpdateModulo;
 using CursoResidencia.Domain.Models;
 using CursoResidencia.Domain.Repository;
 using Microsoft.AspNetCore.Authorization;
@@ -63,5 +64,28 @@ public class ModulosController : ControllerBase
         }
 
         return Ok(modulos);
+    }
+
+    [HttpPut("{id}")]
+    [ProducesResponseType(typeof(StackSpot.ErrorHandler.HttpResponse), (int)HttpStatusCode.NoContent)]
+    [ProducesResponseType(typeof(StackSpot.ErrorHandler.HttpResponse), (int)HttpStatusCode.BadRequest)]
+    [ProducesResponseType(typeof(StackSpot.ErrorHandler.HttpResponse), (int)HttpStatusCode.UnprocessableEntity)]
+    public async Task<IActionResult> Put([FromRoute] int id, [FromBody] UpdateModuloCommand command)
+    {
+        command.Id = id;
+
+        try
+        {
+            await _mediator.Send(command);
+            return NoContent();
+        }
+        catch (NotFoundException)
+        {
+            return NotFound();
+        }
+        catch (UnprocessableEntityException e)
+        {
+            return UnprocessableEntity(new { message = e.Message });
+        }
     }
 }

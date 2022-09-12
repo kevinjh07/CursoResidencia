@@ -2,6 +2,8 @@
 
 public class Modulo
 {
+    private Situacao situacao;
+
     public int Id { get; set; }
     public string Nome { get; set; }
     public Situacao Situacao { get; set; }
@@ -18,5 +20,19 @@ public class Modulo
         CursoId = cursoId;
         Situacao = Situacao.Ativo;
         DataCadastro = DateTime.Now;
+    }
+
+    public Modulo(int id, string nome, DateTime dataCadastro, Situacao situacao, int cursoId)
+    {
+        Id = id;
+        Nome = nome;
+        DataCadastro = dataCadastro;
+        Situacao = situacao;
+        CursoId = cursoId;
+    }
+
+    public Modulo()
+    {
+
     }
 }
