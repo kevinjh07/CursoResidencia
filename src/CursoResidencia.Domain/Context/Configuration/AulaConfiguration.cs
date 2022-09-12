@@ -15,9 +15,6 @@ public class AulaConfiguration : IEntityTypeConfiguration<Aula>
         builder.HasOne(a => a.Modulo)
             .WithMany(m => m.Aulas);
 
-        builder.HasOne(a => a.Professor)
-            .WithMany(p => p.Aulas);
-
         builder.Property(a => a.Nome)
             .HasMaxLength(200)
             .IsRequired();

@@ -22,22 +22,7 @@ public class ProfessorConfiguration : IEntityTypeConfiguration<Professor>
         builder.HasIndex(p => p.Email)
             .IsUnique();
 
-        builder.Property(p => p.MiniCurriculo)
-            .HasColumnType("text")
-            .HasMaxLength(3000);
-
-        builder.Property(p => p.PermiteTutoria).IsRequired();
-
         builder.Property(p => p.Situacao)
             .IsRequired();
-
-        builder.Property(p => p.Imagem)
-            .HasMaxLength(200);
-
-        builder
-            .HasOne(p => p.Usuario)
-            .WithOne(u => u.Professor)
-            .HasForeignKey<Professor>(p => p.UsuarioId)
-            .IsRequired(false);
     }
 }
