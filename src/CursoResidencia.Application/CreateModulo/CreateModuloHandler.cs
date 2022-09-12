@@ -12,7 +12,7 @@ public class CreateModuloHandler : IRequestHandler<CreateModuloCommand, CreateMo
         _context = context;
     }
 
-    public async Task<CreateModuloResult> Handle(CreateModuloCommand request, CancellationToken cancellationToken)
+    public Task<CreateModuloResult> Handle(CreateModuloCommand request, CancellationToken cancellationToken)
     {
         ValidarModulo(request.Nome);
         ValidarCurso(request.CursoId);
@@ -21,7 +21,7 @@ public class CreateModuloHandler : IRequestHandler<CreateModuloCommand, CreateMo
         _context.Modulos.Add(modulo);
         _context.SaveChanges();
 
-        return new CreateModuloResult(modulo);
+        return Task.FromResult(new CreateModuloResult(modulo));
     }
 
     private void ValidarModulo(string nome)
