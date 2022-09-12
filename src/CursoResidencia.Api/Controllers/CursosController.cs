@@ -38,10 +38,32 @@ public class CursosController : ControllerBase
         }
     }
 
+    [HttpGet("{id}")]
+    [ProducesResponseType(typeof(Curso), (int)HttpStatusCode.OK)]
+    [ProducesResponseType(typeof(StackSpot.ErrorHandler.HttpResponse), (int)HttpStatusCode.NotFound)]
+    public IActionResult Get([FromRoute] int id)
+    {
+        try
+        {
+            var curso = _cursoRepository.GetById(id);
+
+            if (curso == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(curso);
+        }
+        catch (NotFoundException)
+        {
+            return NotFound();
+        }
+    }
+
     [HttpGet]
     [ProducesResponseType(typeof(IEnumerable<Curso>), (int)HttpStatusCode.OK)]
     [ProducesResponseType(typeof(StackSpot.ErrorHandler.HttpResponse), (int)HttpStatusCode.NoContent)]
-    public IActionResult Get()
+    public IActionResult GetAll()
     {
         var cursos = _cursoRepository.GetAll();
         if (!cursos.Any())
@@ -56,7 +78,7 @@ public class CursosController : ControllerBase
     [ProducesResponseType(typeof(StackSpot.ErrorHandler.HttpResponse), (int)HttpStatusCode.NoContent)]
     [ProducesResponseType(typeof(StackSpot.ErrorHandler.HttpResponse), (int)HttpStatusCode.BadRequest)]
     [ProducesResponseType(typeof(StackSpot.ErrorHandler.HttpResponse), (int)HttpStatusCode.UnprocessableEntity)]
-    public async Task<IActionResult> Put(int id, [FromBody] UpdateCursoCommand command)
+    public async Task<IActionResult> Put([FromRoute] int id, [FromBody] UpdateCursoCommand command)
     {
         command.Id = id;
 

@@ -3,4 +3,5 @@
 public interface ICursoRepository
 {
     IEnumerable<Curso> GetAll();
+    Curso GetById(int id);
 }

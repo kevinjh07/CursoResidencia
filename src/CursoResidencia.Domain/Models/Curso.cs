@@ -11,6 +11,7 @@ public class Curso
     public ICollection<VisualizacaoAula> VisualizacaoAulas { get; set; }
     public ICollection<ProfessorCurso> ProfessorCursos { get; set; }
     public ICollection<Simulado> Simulados { get; set; }
+    public ICollection<Modulo> Modulos { get; set; }
     public Situacao Situacao { get; set; }
 
     public Curso(string nome, DateTime dataInicio, DateTime dataFim)
@@ -30,5 +31,10 @@ public class Curso
         DataInicio = dataInicio;
         DataFim = dataFim;
         Situacao = situacao;
+    }
+
+    public Curso()
+    {
+
     }
 }

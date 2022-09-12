@@ -28,7 +28,7 @@ public class CreateCursoHandler : IRequestHandler<CreateCursoCommand, CreateCurs
 
     private CreateCursoResult Salvar(CreateCursoCommand request)
     {
-        if (CursoExiste(/*request.Id,*/ request.Nome))
+        if (CursoExiste(request.Nome))
             throw new UnprocessableEntityException("Já existe um curso cadastrado com este nome");
 
         var curso = new Curso(request.Nome, request.DataInicio, request.DataFim);
@@ -36,11 +36,11 @@ public class CreateCursoHandler : IRequestHandler<CreateCursoCommand, CreateCurs
         _context.Cursos.Add(curso);
         _context.SaveChanges();
 
-        return new CreateCursoResult(curso.Id, curso.Nome, curso.DataInicio, curso.DataFim);
+        return new CreateCursoResult(curso);
     }
 
-    private bool CursoExiste(/*int id,*/ string nome)
+    private bool CursoExiste(string nome)
     {
-        return _context.Cursos.Any(c => c.Nome.Trim().ToUpper().Equals(nome.Trim().ToUpper()) /* && c.Id != id*/);
+        return _context.Cursos.Any(c => c.Nome.Trim().ToUpper().Equals(nome.Trim().ToUpper()));
     }
 }

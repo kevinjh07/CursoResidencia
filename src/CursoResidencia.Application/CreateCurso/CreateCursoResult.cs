@@ -8,13 +8,15 @@ public class CreateCursoResult : IMapFrom<CreateCursoResponse>
     public string Nome { get; set; }
     public DateTime DataInicio { get; set; }
     public DateTime DataFim { get; set; }
+    public Situacao Situacao { get; set; }
 
-    public CreateCursoResult(int id, string nome, DateTime dataInicio, DateTime dataFim)
+    public CreateCursoResult(Curso curso)
     {
-        Id = id;
-        Nome = nome;
-        DataInicio = dataInicio;
-        DataFim = dataFim;
+        Id = curso.Id;
+        Nome = curso.Nome;
+        DataInicio = curso.DataInicio;
+        DataFim = curso.DataFim;
+        Situacao = curso.Situacao;
     }
 
     public CreateCursoResult()
@@ -28,6 +30,7 @@ public class CreateCursoResult : IMapFrom<CreateCursoResponse>
             .ForMember(c => c.Id, opt => opt.MapFrom(c => c.Id))
             .ForMember(c => c.Nome, opt => opt.MapFrom(c => c.Nome))
             .ForMember(c => c.DataInicio, opt => opt.MapFrom(c => c.DataInicio))
-            .ForMember(c => c.DataFim, opt => opt.MapFrom(c => c.DataFim));
+            .ForMember(c => c.DataFim, opt => opt.MapFrom(c => c.DataFim))
+            .ForMember(c => c.Situacao, opt => opt.MapFrom(c => c.Situacao));
     }
 }
