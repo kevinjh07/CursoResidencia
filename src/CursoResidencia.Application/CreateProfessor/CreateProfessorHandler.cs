@@ -1,4 +1,4 @@
-﻿using CursoResidencia.Application.Exceptions;
+using CursoResidencia.Application.Exceptions;
 using CursoResidencia.Domain.Context;
 
 namespace CursoResidencia.Application.CreateProfessor;
@@ -16,7 +16,7 @@ public class CreateProfessorHandler : IRequestHandler<CreateProfessorCommand, Cr
     {
         ValidarProfessor(request);
 
-        var professor = new Professor(request.Nome, request.Email);
+        var professor = new Professor(request.Nome, request.Email, request.ProfessorCursos.Select(pc => pc.CursoId));
         _context.Professores.Add(professor);
         _context.SaveChanges();
 

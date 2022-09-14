@@ -1,4 +1,4 @@
-﻿using CursoResidencia.Application.Common.Mappings;
+using CursoResidencia.Application.Common.Mappings;
 
 namespace CursoResidencia.Application.CreateProfessor;
 
@@ -16,7 +16,9 @@ public class CreateProfessorResult : IMapFrom<CreateProfessorResponse>
         Nome = professor.Nome;
         Email = professor.Email;
         Situacao = professor.Situacao;
-        ProfessorCursos = professor.ProfessorCursos;
+        ProfessorCursos = professor.ProfessorCursos
+            .Select(pc => new ProfessorCurso() { CursoId = pc.CursoId })
+            .ToList();
     }
 
     public CreateProfessorResult()

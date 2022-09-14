@@ -1,4 +1,5 @@
-﻿using CursoResidencia.Domain.Context;
+using CursoResidencia.Domain.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace CursoResidencia.Domain.Repository;
 
@@ -14,11 +15,37 @@ public class ProfessorRepository : IProfessorRepository
     public Professor? Get(int id)
     {
         return _context.Professores
+            .Include(p => p.ProfessorCursos)
+            .Select(p => new Professor()
+            {
+                Id = p.Id,
+                Nome = p.Nome,
+                Email = p.Email,
+                Situacao = p.Situacao,
+                DataCadastro = p.DataCadastro,
+                ProfessorCursos = p.ProfessorCursos
+                    .Select(pc => new ProfessorCurso(pc.Curso))
+                    .ToList()
+            })
             .SingleOrDefault(p => p.Id == id);
     }
 
     public IEnumerable<Professor> GetAll()
     {
-        return _context.Professores.ToList();
+        List<Professor> professors = _context.Professores
+                    .Include(p => p.ProfessorCursos)
+                    .Select(p => new Professor()
+                    {
+                        Id = p.Id,
+                        Nome = p.Nome,
+                        Email = p.Email,
+                        Situacao = p.Situacao,
+                        DataCadastro = p.DataCadastro,
+                        ProfessorCursos = p.ProfessorCursos
+                            .Select(pc => new ProfessorCurso(pc.Curso))
+                            .ToList()
+                    })
+                    .ToList();
+        return professors;
     }
 }

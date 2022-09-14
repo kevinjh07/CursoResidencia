@@ -9,12 +9,13 @@ public class Professor
     public ICollection<ProfessorCurso> ProfessorCursos { get; set; }
     public DateTime DataCadastro { get; set; }
 
-    public Professor(string nome, string email)
+    public Professor(string nome, string email, IEnumerable<int> cursosId)
     {
         Nome = nome;
         Email = email;
         Situacao = Situacao.Ativo;
         DataCadastro = DateTime.Now;
+        ProfessorCursos = cursosId.Select(c => new ProfessorCurso() { CursoId = c }).ToList();
     }
 
     public Professor()
