@@ -1,6 +1,8 @@
 ﻿using CursoResidencia.Application.CreateProfessor;
 using CursoResidencia.Application.Exceptions;
+using CursoResidencia.Application.UpdateProfessor;
 using CursoResidencia.Domain.Models;
+using CursoResidencia.Domain.Repository;
 using Microsoft.AspNetCore.Authorization;
 
 namespace CursoResidencia.Api.Controllers;
@@ -11,10 +13,12 @@ namespace CursoResidencia.Api.Controllers;
 public class ProfessoresController : ControllerBase
 {
     private readonly IMediator _mediator;
+    private readonly IProfessorRepository _professorRepository;
 
-    public ProfessoresController(IMediator mediator)
+    public ProfessoresController(IMediator mediator, IProfessorRepository professorRepository)
     {
         _mediator = mediator;
+        _professorRepository = professorRepository;
     }
 
     [HttpPost]
@@ -39,7 +43,11 @@ public class ProfessoresController : ControllerBase
     [ProducesResponseType(typeof(StackSpot.ErrorHandler.HttpResponse), (int)HttpStatusCode.NotFound)]
     public IActionResult Get([FromRoute] int id)
     {
-        return Ok();
+        var professor = _professorRepository.Get(id);
+        if (professor == null)
+            return NotFound();
+
+        return Ok(professor);
     }
 
     [HttpGet]
@@ -47,6 +55,34 @@ public class ProfessoresController : ControllerBase
     [ProducesResponseType(typeof(StackSpot.ErrorHandler.HttpResponse), (int)HttpStatusCode.NoContent)]
     public IActionResult GetAll()
     {
-        return Ok();
+        var professores = _professorRepository.GetAll();
+        if (!professores.Any())
+            return NoContent();
+
+        return Ok(professores);
     }
+
+    [HttpPut("{id}")]
+    [ProducesResponseType((int)HttpStatusCode.NoContent)]
+    [ProducesResponseType(typeof(StackSpot.ErrorHandler.HttpResponse), (int)HttpStatusCode.BadRequest)]
+    [ProducesResponseType(typeof(StackSpot.ErrorHandler.HttpResponse), (int)HttpStatusCode.UnprocessableEntity)]
+    public async Task<IActionResult> Put([FromRoute] int id, [FromBody] UpdateProfessorCommand command)
+    {
+        command.Id = id;
+
+        try
+        {
+            await _mediator.Send(command);
+            return NoContent();
+        }
+        catch (NotFoundException)
+        {
+            return NotFound();
+        }
+        catch (UnprocessableEntityException e)
+        {
+            return UnprocessableEntity(new { message = e.Message });
+        }
+    }
+
 }

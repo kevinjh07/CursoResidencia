@@ -24,5 +24,8 @@ public class ProfessorConfiguration : IEntityTypeConfiguration<Professor>
 
         builder.Property(p => p.Situacao)
             .IsRequired();
+
+        builder.Property(p => p.DataCadastro)
+            .HasColumnType("Date");
     }
 }

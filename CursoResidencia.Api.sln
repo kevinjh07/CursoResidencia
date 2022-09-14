@@ -26,6 +26,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CursoResidencia.Api.UnitTes
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CursoResidencia.Api.IntegrationTests", "tests\CursoResidencia.Api.IntegrationTests\CursoResidencia.Api.IntegrationTests.csproj", "{FB376694-1CEE-4FA2-90AA-F1731B5E3293}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{379DDC3A-A470-495D-A16B-4DBCC56C06F3}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

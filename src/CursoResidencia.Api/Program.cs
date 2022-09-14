@@ -93,6 +93,7 @@ builder.Services.AddScoped<UserManager<ApplicationUser>>();
 builder.Services.AddScoped<IHelloWorldService, HelloWorldService>();
 builder.Services.AddScoped<ICursoRepository, CursoRepository>();
 builder.Services.AddScoped<IModuloRepository, ModuloRepository>();
+builder.Services.AddScoped<IProfessorRepository, ProfessorRepository>();
 
 var app = builder.Build();
 
