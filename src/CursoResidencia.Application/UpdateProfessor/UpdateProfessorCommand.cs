@@ -1,4 +1,6 @@
-﻿namespace CursoResidencia.Application.UpdateProfessor;
+using CursoResidencia.Application.CreateProfessor;
+
+namespace CursoResidencia.Application.UpdateProfessor;
 
 public class UpdateProfessorCommand : IRequest
 {
@@ -6,4 +8,5 @@ public class UpdateProfessorCommand : IRequest
     public string Nome { get; set; }
     public string Email { get; set; }
     public Situacao Situacao { get; set; }
+    public IEnumerable<ProfessorCursoCommand> ProfessorCursos { get; set; }
 }
