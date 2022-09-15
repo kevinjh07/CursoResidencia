@@ -1,4 +1,4 @@
-﻿using CursoResidencia.Application.Exceptions;
+using CursoResidencia.Application.Exceptions;
 using CursoResidencia.Domain.Context;
 
 namespace CursoResidencia.Application.CreateCurso;
@@ -21,9 +21,10 @@ public class CreateCursoHandler : IRequestHandler<CreateCursoCommand, CreateCurs
         _context = context;
     }
 
-    public async Task<CreateCursoResult> Handle(CreateCursoCommand request, CancellationToken cancellationToken)
+    public Task<CreateCursoResult> Handle(CreateCursoCommand request, CancellationToken cancellationToken)
     {
-        return Salvar(request);
+        var result = Salvar(request);
+        return Task.FromResult(result);
     }
 
     private CreateCursoResult Salvar(CreateCursoCommand request)

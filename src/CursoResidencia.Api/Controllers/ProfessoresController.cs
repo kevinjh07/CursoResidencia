@@ -1,4 +1,4 @@
-﻿using CursoResidencia.Application.CreateProfessor;
+using CursoResidencia.Application.CreateProfessor;
 using CursoResidencia.Application.Exceptions;
 using CursoResidencia.Application.UpdateProfessor;
 using CursoResidencia.Domain.Models;
@@ -84,5 +84,4 @@ public class ProfessoresController : ControllerBase
             return UnprocessableEntity(new { message = e.Message });
         }
     }
-
 }

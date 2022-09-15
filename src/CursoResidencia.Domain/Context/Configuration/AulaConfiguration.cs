@@ -22,16 +22,13 @@ public class AulaConfiguration : IEntityTypeConfiguration<Aula>
         builder.Property(a => a.Descricao)
             .HasMaxLength(500);
 
-        builder.Property(a => a.CodigoVimeo)
-            .HasMaxLength(20);
+        builder.Property(a => a.LinkVideo)
+            .HasMaxLength(500);
 
         builder.Property(a => a.Situacao)
             .IsRequired();
 
-        builder.Property(a => a.Ordem)
-            .HasDefaultValue(0);
-
-        builder.Property(a => a.OrdemTrial)
-            .HasDefaultValue(0);
+        builder.Property(a => a.DataCadastro)
+            .HasColumnType("Date");
     }
 }
