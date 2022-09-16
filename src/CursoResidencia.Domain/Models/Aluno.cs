@@ -20,4 +20,9 @@ public class Aluno
         DataDeCadastro = DateTime.Now;
         UsuarioId = usuarioId;
     }
+
+    public Aluno()
+    {
+
+    }
 }

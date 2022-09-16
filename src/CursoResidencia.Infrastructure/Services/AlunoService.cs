@@ -15,6 +15,7 @@ public class AlunoService : IAlunoService
     public IEnumerable<Aluno> GetAll()
     {
         return _context.Alunos.ToList();
+
     }
 
     public Aluno? GetById(int id)
