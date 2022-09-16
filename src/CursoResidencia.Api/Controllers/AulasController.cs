@@ -1,5 +1,6 @@
 using CursoResidencia.Application.CreateAula;
 using CursoResidencia.Application.Exceptions;
+using CursoResidencia.Application.UpdateAula;
 using CursoResidencia.Domain.Interfaces.Services;
 using CursoResidencia.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -61,26 +62,26 @@ public class AulasController : ControllerBase
         return Ok(aulas);
     }
 
-    //[HttpPut("{id}")]
-    //[ProducesResponseType((int)HttpStatusCode.NoContent)]
-    //[ProducesResponseType(typeof(StackSpot.ErrorHandler.HttpResponse), (int)HttpStatusCode.BadRequest)]
-    //[ProducesResponseType(typeof(StackSpot.ErrorHandler.HttpResponse), (int)HttpStatusCode.UnprocessableEntity)]
-    //public async Task<IActionResult> Put([FromRoute] int id, [FromBody] UpdateAulaCommand command)
-    //{
-    //    command.Id = id;
+    [HttpPut("{id}")]
+    [ProducesResponseType((int)HttpStatusCode.NoContent)]
+    [ProducesResponseType(typeof(StackSpot.ErrorHandler.HttpResponse), (int)HttpStatusCode.BadRequest)]
+    [ProducesResponseType(typeof(StackSpot.ErrorHandler.HttpResponse), (int)HttpStatusCode.UnprocessableEntity)]
+    public async Task<IActionResult> Put([FromRoute] int id, [FromBody] UpdateAulaCommand command)
+    {
+        command.Id = id;
 
-    //    try
-    //    {
-    //        await _mediator.Send(command);
-    //        return NoContent();
-    //    }
-    //    catch (NotFoundException)
-    //    {
-    //        return NotFound();
-    //    }
-    //    catch (UnprocessableEntityException e)
-    //    {
-    //        return UnprocessableEntity(new { message = e.Message });
-    //    }
-    //}
+        try
+        {
+            await _mediator.Send(command);
+            return NoContent();
+        }
+        catch (NotFoundException)
+        {
+            return NotFound();
+        }
+        catch (UnprocessableEntityException e)
+        {
+            return UnprocessableEntity(new { message = e.Message });
+        }
+    }
 }

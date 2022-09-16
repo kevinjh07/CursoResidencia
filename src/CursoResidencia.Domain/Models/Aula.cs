@@ -26,4 +26,14 @@ public class Aula
     {
 
     }
+
+    public Aula(int id, int moduloId, string nome, string descricao, string linkVideo, Situacao situacao)
+    {
+        Id = id;
+        ModuloId = moduloId;
+        Nome = nome;
+        Descricao = descricao;
+        LinkVideo = linkVideo;
+        Situacao = situacao;
+    }
 }
