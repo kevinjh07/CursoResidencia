@@ -1,8 +1,8 @@
 ﻿using CursoResidencia.Application.CreateModulo;
 using CursoResidencia.Application.Exceptions;
 using CursoResidencia.Application.UpdateModulo;
+using CursoResidencia.Domain.Interfaces.Services;
 using CursoResidencia.Domain.Models;
-using CursoResidencia.Domain.Repository;
 using Microsoft.AspNetCore.Authorization;
 
 namespace CursoResidencia.Api.Controllers;

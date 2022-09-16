@@ -6,14 +6,13 @@ using CursoResidencia.Application.Common.StackSpot;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using CursoResidencia.Domain.Models;
-using CursoResidencia.Infrastructure.Services;
-using CursoResidencia.Domain.Interfaces.Services;
-using CursoResidencia.Domain.Context;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authorization;
-using CursoResidencia.Domain.Repository;
+using CursoResidencia.Domain.Context;
+using CursoResidencia.Domain.Interfaces.Services;
+using CursoResidencia.Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

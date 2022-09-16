@@ -1,4 +1,4 @@
-﻿namespace CursoResidencia.Domain.Repository;
+﻿namespace CursoResidencia.Domain.Interfaces.Services;
 
 public interface IModuloRepository
 {

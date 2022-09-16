@@ -1,6 +1,7 @@
-﻿using CursoResidencia.Domain.Context;
+using CursoResidencia.Domain.Context;
+using CursoResidencia.Domain.Interfaces.Services;
 
-namespace CursoResidencia.Domain.Repository;
+namespace CursoResidencia.Infrastructure.Services;
 
 public class ModuloRepository : IModuloRepository
 {

@@ -1,7 +1,8 @@
 using CursoResidencia.Domain.Context;
+using CursoResidencia.Domain.Interfaces.Services;
 using Microsoft.EntityFrameworkCore;
 
-namespace CursoResidencia.Domain.Repository;
+namespace CursoResidencia.Infrastructure.Services;
 
 public class ProfessorRepository : IProfessorRepository
 {
