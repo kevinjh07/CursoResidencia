@@ -10,7 +10,6 @@ public class Aula
     public string LinkVideo { get; set; }
     public Situacao Situacao { get; set; }
     public DateTime DataCadastro { get; set; }
-    public ICollection<VisualizacaoAula> VisualizacaoAulas { get; set; }
 
     public Aula(int moduloId, string nome, string descricao, string linkVideo)
     {

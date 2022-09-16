@@ -1,4 +1,4 @@
-﻿using CursoResidencia.Application.Exceptions;
+using CursoResidencia.Application.Exceptions;
 using CursoResidencia.Domain.Context;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -13,19 +13,16 @@ public class AuthHandler : IRequestHandler<AuthCommand, AuthResult>
 {
     private readonly ILogger<AuthHandler> _logger;
     private readonly IMapper _mapper;
-    //private readonly IHelloWorldService _helloWorldService;
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly ApplicationContext _context;
 
     public AuthHandler(ILogger<AuthHandler> logger,
-                                    IMapper mapper/*,
-                                    IHelloWorldService helloWorldService*/,
+                                    IMapper mapper,
                                     UserManager<ApplicationUser> userManager,
                                     ApplicationContext context)
     {
         _logger = logger;
         _mapper = mapper;
-        //_helloWorldService = helloWorldService;
         _userManager = userManager;
         _context = context;
     }
@@ -84,7 +81,7 @@ public class AuthHandler : IRequestHandler<AuthCommand, AuthResult>
         var securityToken = tokenHandler.CreateToken(tokenDescriptor);
         var token = tokenHandler.WriteToken(securityToken);
 
-        return new AuthResponse(token,DateTimeOffset.Now.AddMinutes(120));
+        return new AuthResponse(token, DateTimeOffset.Now.AddMinutes(120));
     }
 
     private SecurityTokenDescriptor GetSecurityTokenDescriptor(ApplicationUser user, IEnumerable<string> role)

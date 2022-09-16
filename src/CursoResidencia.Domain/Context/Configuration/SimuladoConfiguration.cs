@@ -13,9 +13,6 @@ public class SimuladoConfiguration : IEntityTypeConfiguration<Simulado>
         builder.Property(s => s.Id)
             .ValueGeneratedOnAdd();
 
-        builder.HasOne(s => s.Aluno)
-            .WithMany(a => a.Simulados);
-
         builder.HasOne(s => s.Modulo)
             .WithMany(m => m.Simulados)
             .IsRequired(false);

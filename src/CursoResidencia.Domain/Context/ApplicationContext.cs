@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using CursoResidencia.Domain.Context.Configuration;
@@ -16,7 +16,6 @@ public class ApplicationContext : IdentityDbContext<IdentityUser<int>, IdentityR
     public DbSet<Aula> Aulas { get; set; }
     public DbSet<CursoAula> CursoAulas { get; set; }
     public DbSet<Simulado> Simulados { get; set; }
-    public DbSet<VisualizacaoAula> VisualizacaoAulas { get; set; }
     public DbSet<SimuladoQuestaoProva> SimuladoQuestoesProva { get; set; }
 
     public ApplicationContext(DbContextOptions<ApplicationContext> options)
@@ -34,7 +33,6 @@ public class ApplicationContext : IdentityDbContext<IdentityUser<int>, IdentityR
         builder.ApplyConfiguration(new ProfessorCursoConfiguration());
         builder.ApplyConfiguration(new AlunoConfiguration());
         builder.ApplyConfiguration(new AulaConfiguration());
-        builder.ApplyConfiguration(new VisualizacaoAulaConfiguration());
         builder.ApplyConfiguration(new QuestaoProvaConfiguration());
         builder.ApplyConfiguration(new SimuladoConfiguration());
         builder.ApplyConfiguration(new RespostaQuestaoSimuladoConfiguration());

@@ -34,7 +34,7 @@ public class UpdateAulaHandler : IRequestHandler<UpdateAulaCommand>
                 request.Nome,
                 request.Descricao,
                 request.LinkVideo,
-        request.Situacao));
+                request.Situacao));
         _context.SaveChanges();
 
         return Task.FromResult(Unit.Value);
