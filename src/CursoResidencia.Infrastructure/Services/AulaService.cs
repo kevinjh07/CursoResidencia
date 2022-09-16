@@ -17,6 +17,11 @@ public class AulaService : IAulaService
         return _context.Aulas.ToList();
     }
 
+    public IEnumerable<Aula> GetAllAvailable()
+    {
+        return _context.Aulas.Where(a => a.Situacao == Situacao.Ativo).ToList();
+    }
+
     public Aula? GetById(int id)
     {
         return _context.Aulas.SingleOrDefault(a => a.Id == id);
