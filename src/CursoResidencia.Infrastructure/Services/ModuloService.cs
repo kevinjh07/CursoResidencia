@@ -3,11 +3,11 @@ using CursoResidencia.Domain.Interfaces.Services;
 
 namespace CursoResidencia.Infrastructure.Services;
 
-public class ModuloRepository : IModuloRepository
+public class ModuloService : IModuloService
 {
     private readonly ApplicationContext _context;
 
-    public ModuloRepository(ApplicationContext context)
+    public ModuloService(ApplicationContext context)
     {
         _context = context;
     }

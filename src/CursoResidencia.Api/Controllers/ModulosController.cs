@@ -13,9 +13,9 @@ namespace CursoResidencia.Api.Controllers;
 public class ModulosController : ControllerBase
 {
     private readonly IMediator _mediator;
-    private readonly IModuloRepository _moduloRepository;
+    private readonly IModuloService _moduloRepository;
 
-    public ModulosController(IMediator mediator, IModuloRepository moduloRepository)
+    public ModulosController(IMediator mediator, IModuloService moduloRepository)
     {
         _mediator = mediator;
         _moduloRepository = moduloRepository;

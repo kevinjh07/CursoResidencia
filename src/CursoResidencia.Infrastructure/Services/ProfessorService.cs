@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CursoResidencia.Infrastructure.Services;
 
-public class ProfessorRepository : IProfessorRepository
+public class ProfessorService : IProfessorService
 {
     private readonly ApplicationContext _context;
 
-    public ProfessorRepository(ApplicationContext context)
+    public ProfessorService(ApplicationContext context)
     {
         _context = context;
     }

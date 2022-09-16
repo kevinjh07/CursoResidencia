@@ -1,6 +1,6 @@
 ﻿namespace CursoResidencia.Domain.Interfaces.Services;
 
-public interface IModuloRepository
+public interface IModuloService
 {
     IEnumerable<Modulo> GetAll();
     Modulo GetById(int id);

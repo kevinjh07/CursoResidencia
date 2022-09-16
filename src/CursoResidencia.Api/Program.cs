@@ -90,9 +90,10 @@ builder.Services.Configure<IdentityOptions>(options =>
 builder.Services.AddScoped<RoleManager<IdentityRole<int>>>();
 builder.Services.AddScoped<UserManager<ApplicationUser>>();
 builder.Services.AddScoped<IHelloWorldService, HelloWorldService>();
-builder.Services.AddScoped<ICursoRepository, CursoRepository>();
-builder.Services.AddScoped<IModuloRepository, ModuloRepository>();
-builder.Services.AddScoped<IProfessorRepository, ProfessorRepository>();
+builder.Services.AddScoped<ICursoService, CursoService>();
+builder.Services.AddScoped<IModuloService, ModuloService>();
+builder.Services.AddScoped<IProfessorService, ProfessorService>();
+builder.Services.AddScoped<IAulaService, AulaService>();
 
 var app = builder.Build();
 

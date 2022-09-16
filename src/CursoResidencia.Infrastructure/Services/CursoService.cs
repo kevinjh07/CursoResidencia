@@ -3,11 +3,11 @@ using CursoResidencia.Domain.Interfaces.Services;
 
 namespace CursoResidencia.Infrastructure.Services;
 
-public class CursoRepository : ICursoRepository
+public class CursoService : ICursoService
 {
     private readonly ApplicationContext _context;
 
-    public CursoRepository(ApplicationContext context)
+    public CursoService(ApplicationContext context)
     {
         _context = context;
     }

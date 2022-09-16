@@ -13,9 +13,9 @@ namespace CursoResidencia.Api.Controllers;
 public class CursosController : ControllerBase
 {
     private readonly IMediator _mediator;
-    private readonly ICursoRepository _cursoRepository;
+    private readonly ICursoService _cursoRepository;
 
-    public CursosController(IMediator mediator, ICursoRepository cursoRepository)
+    public CursosController(IMediator mediator, ICursoService cursoRepository)
     {
         _mediator = mediator;
         _cursoRepository = cursoRepository;

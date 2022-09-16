@@ -1,5 +1,6 @@
 using CursoResidencia.Application.CreateAula;
 using CursoResidencia.Application.Exceptions;
+using CursoResidencia.Domain.Interfaces.Services;
 using CursoResidencia.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 
@@ -11,10 +12,12 @@ namespace CursoResidencia.Api.Controllers;
 public class AulasController : ControllerBase
 {
     private readonly IMediator _mediator;
+    private readonly IAulaService _aulaService;
 
-    public AulasController(IMediator mediator)
+    public AulasController(IMediator mediator, IAulaService aulaService)
     {
         _mediator = mediator;
+        _aulaService = aulaService;
     }
 
     [HttpPost]
@@ -39,7 +42,11 @@ public class AulasController : ControllerBase
     [ProducesResponseType(typeof(StackSpot.ErrorHandler.HttpResponse), (int)HttpStatusCode.NotFound)]
     public IActionResult Get([FromRoute] int id)
     {
-        return NotFound();
+        var aula = _aulaService.GetById(id);
+        if (aula == null)
+            return NotFound();
+
+        return Ok(aula);
     }
 
     [HttpGet]
@@ -47,7 +54,11 @@ public class AulasController : ControllerBase
     [ProducesResponseType(typeof(StackSpot.ErrorHandler.HttpResponse), (int)HttpStatusCode.NoContent)]
     public IActionResult GetAll()
     {
-        return NoContent();
+        var aulas = _aulaService.GetAll();
+        if (!aulas.Any())
+            return NoContent();
+
+        return Ok(aulas);
     }
 
     //[HttpPut("{id}")]
