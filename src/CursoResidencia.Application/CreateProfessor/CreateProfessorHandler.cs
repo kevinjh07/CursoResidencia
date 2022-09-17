@@ -16,7 +16,7 @@ public class CreateProfessorHandler : IRequestHandler<CreateProfessorCommand, Cr
     {
         ValidarProfessor(request);
 
-        var professor = new Professor(request.Nome, request.Email, request.ProfessorCursos.Select(pc => pc.CursoId));
+        var professor = new Professor(request.Nome, request.Email);
         _context.Professores.Add(professor);
         _context.SaveChanges();
 

@@ -24,5 +24,8 @@ public class CursoConfiguration : IEntityTypeConfiguration<Curso>
 
         builder.Property(c => c.DataCadastro)
             .HasColumnType("Date");
+
+        builder.HasOne(c => c.Professor)
+            .WithMany(p => p.Cursos);
     }
 }

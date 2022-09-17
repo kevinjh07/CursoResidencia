@@ -16,7 +16,6 @@ public class UpdateProfessorHandler : IRequestHandler<UpdateProfessorCommand>
     public Task<Unit> Handle(UpdateProfessorCommand request, CancellationToken cancellationToken)
     {
         var professor = _context.Professores
-            .Include(p => p.ProfessorCursos)
             .SingleOrDefault(c => c.Id == request.Id);
 
         if (professor == null)
@@ -25,7 +24,6 @@ public class UpdateProfessorHandler : IRequestHandler<UpdateProfessorCommand>
         }
 
         ValidarProfessor(request);
-        AtualizarProfessorCursos(request, professor);
 
         _context.Entry(professor)
             .CurrentValues
@@ -33,8 +31,7 @@ public class UpdateProfessorHandler : IRequestHandler<UpdateProfessorCommand>
                 request.Nome,
                 request.Email,
                 professor.DataCadastro,
-                request.Situacao,
-                professor.ProfessorCursos));
+                request.Situacao));
         _context.SaveChanges();
 
         return Task.FromResult(Unit.Value);
@@ -46,20 +43,6 @@ public class UpdateProfessorHandler : IRequestHandler<UpdateProfessorCommand>
         if (professorExiste)
         {
             throw new UnprocessableEntityException("Já existe um professor cadastrado com este email!");
-        }
-    }
-
-    private void AtualizarProfessorCursos(UpdateProfessorCommand updateProfessor, Professor professor)
-    {
-        if (professor.ProfessorCursos.Any())
-        {
-            _context.ProfessorCursos.RemoveRange(professor.ProfessorCursos);
-            _context.SaveChanges();
-        }
-
-        foreach (var pc in updateProfessor.ProfessorCursos)
-        {
-            professor.ProfessorCursos.Add(new ProfessorCurso() { ProfessorId = professor.Id, CursoId = pc.CursoId });
         }
     }
 }

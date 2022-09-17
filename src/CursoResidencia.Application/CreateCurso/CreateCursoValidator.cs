@@ -7,5 +7,8 @@ public class CreateCursoValidator : AbstractValidator<CreateCursoCommand>
         RuleFor(x => x.Nome)
             .NotEmpty()
             .MaximumLength(200);
+
+        RuleFor(x => x.ProfessorId)
+            .NotNull();
     }
 }

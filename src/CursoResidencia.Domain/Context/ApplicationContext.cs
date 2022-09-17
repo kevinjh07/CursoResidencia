@@ -11,7 +11,6 @@ public class ApplicationContext : IdentityDbContext<IdentityUser<int>, IdentityR
     public DbSet<Curso> Cursos { get; set; }
     public DbSet<Modulo> Modulos { get; set; }
     public DbSet<Professor> Professores { get; set; }
-    public DbSet<ProfessorCurso> ProfessorCursos { get; set; }
     public DbSet<Aluno> Alunos { get; set; }
     public DbSet<Aula> Aulas { get; set; }
     public DbSet<CursoAula> CursoAulas { get; set; }
@@ -30,7 +29,6 @@ public class ApplicationContext : IdentityDbContext<IdentityUser<int>, IdentityR
         builder.ApplyConfiguration(new ModuloConfiguration());
         builder.ApplyConfiguration(new ProfessorConfiguration());
         builder.ApplyConfiguration(new CursoAulaConfiguration());
-        builder.ApplyConfiguration(new ProfessorCursoConfiguration());
         builder.ApplyConfiguration(new AlunoConfiguration());
         builder.ApplyConfiguration(new AulaConfiguration());
         builder.ApplyConfiguration(new QuestaoProvaConfiguration());

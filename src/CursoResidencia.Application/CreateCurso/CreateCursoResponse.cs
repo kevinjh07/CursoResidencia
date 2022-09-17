@@ -1,4 +1,4 @@
-﻿namespace CursoResidencia.Application.CreateCurso;
+namespace CursoResidencia.Application.CreateCurso;
 
 public class CreateCursoResponse
 {
@@ -7,4 +7,5 @@ public class CreateCursoResponse
     public DateTime DataInicio { get; set; }
     public DateTime DataFim { get; set; }
     public Situacao Situacao { get; set; }
+    public int ProfessorId { get; set; }
 }

@@ -1,7 +1,6 @@
 using CursoResidencia.Domain.Context;
 using CursoResidencia.Domain.Interfaces.Services;
 using CursoResidencia.Domain.Models.Dto;
-using Microsoft.EntityFrameworkCore;
 
 namespace CursoResidencia.Infrastructure.Services;
 
@@ -27,8 +26,7 @@ public class CursoService : ICursoService
             {
                 Id = c.Id,
                 Nome = c.Nome,
-                NomeProfessor = c.ProfessorCursos
-                    .SingleOrDefault(pc => pc.CursoId == c.Id).Professor.Nome,
+                NomeProfessor = c.Professor.Nome,
                 Aulas = _context.Aulas
                     .Where(a => a.Situacao == Situacao.Ativo && a.Modulo.CursoId == c.Id)
                     .Select(a => new AulaDto()
@@ -53,13 +51,11 @@ public class CursoService : ICursoService
     {
         return _context.Cursos
             .Where(c => c.Situacao == Situacao.Ativo)
-            .Include(c => c.ProfessorCursos)
             .Select(c => new CursoDto()
             {
                 Id = c.Id,
                 Nome = c.Nome,
-                NomeProfessor = c.ProfessorCursos
-                    .SingleOrDefault(pc => pc.CursoId == c.Id).Professor.Nome
+                NomeProfessor = c.Professor.Nome
             });
     }
 }

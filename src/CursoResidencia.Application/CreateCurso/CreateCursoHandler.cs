@@ -23,7 +23,7 @@ public class CreateCursoHandler : IRequestHandler<CreateCursoCommand, CreateCurs
         if (CursoExiste(request.Nome))
             throw new UnprocessableEntityException("Já existe um curso cadastrado com este nome");
 
-        var curso = new Curso(request.Nome);
+        var curso = new Curso(request.Nome, request.ProfessorId);
 
         _context.Cursos.Add(curso);
         _context.SaveChanges();
