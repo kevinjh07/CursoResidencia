@@ -1,13 +1,13 @@
-﻿using CursoResidencia.Application.CreateCurso;
+using CursoResidencia.Application.CreateCurso;
 using CursoResidencia.Application.Exceptions;
 using CursoResidencia.Application.UpdateCurso;
 using CursoResidencia.Domain.Interfaces.Services;
 using CursoResidencia.Domain.Models;
+using CursoResidencia.Domain.Models.Dto;
 using Microsoft.AspNetCore.Authorization;
 
 namespace CursoResidencia.Api.Controllers;
 
-[Authorize(Roles = "Administrador")]
 [ApiController]
 [Route("[controller]")]
 public class CursosController : ControllerBase
@@ -21,6 +21,7 @@ public class CursosController : ControllerBase
         _cursoRepository = cursoRepository;
     }
 
+    [Authorize(Roles = "Administrador")]
     [HttpPost]
     [ProducesResponseType(typeof(CreateCursoResult), (int)HttpStatusCode.Created)]
     [ProducesResponseType(typeof(StackSpot.ErrorHandler.HttpResponse), (int)HttpStatusCode.BadRequest)]
@@ -38,6 +39,7 @@ public class CursosController : ControllerBase
         }
     }
 
+    [Authorize(Roles = "Administrador")]
     [HttpGet("{id}")]
     [ProducesResponseType(typeof(Curso), (int)HttpStatusCode.OK)]
     [ProducesResponseType(typeof(StackSpot.ErrorHandler.HttpResponse), (int)HttpStatusCode.NotFound)]
@@ -60,6 +62,7 @@ public class CursosController : ControllerBase
         }
     }
 
+    [Authorize(Roles = "Administrador")]
     [HttpGet]
     [ProducesResponseType(typeof(IEnumerable<Curso>), (int)HttpStatusCode.OK)]
     [ProducesResponseType(typeof(StackSpot.ErrorHandler.HttpResponse), (int)HttpStatusCode.NoContent)]
@@ -74,6 +77,37 @@ public class CursosController : ControllerBase
         return Ok(cursos);
     }
 
+    [Authorize(Roles = "Aluno")]
+    [HttpGet("disponiveis")]
+    [ProducesResponseType(typeof(IEnumerable<CursoDto>), (int)HttpStatusCode.OK)]
+    [ProducesResponseType(typeof(StackSpot.ErrorHandler.HttpResponse), (int)HttpStatusCode.NoContent)]
+    public IActionResult GetDisponiveis()
+    {
+        var cursos = _cursoRepository.GetDisponiveis();
+        if (!cursos.Any())
+        {
+            return NoContent();
+        }
+
+        return Ok(cursos);
+    }
+
+    [Authorize(Roles = "Aluno")]
+    [HttpGet("{id}/aulas")]
+    [ProducesResponseType(typeof(IEnumerable<CursoDto>), (int)HttpStatusCode.OK)]
+    [ProducesResponseType(typeof(StackSpot.ErrorHandler.HttpResponse), (int)HttpStatusCode.NoContent)]
+    public IActionResult GetDisponiveis([FromRoute] int id)
+    {
+        var cursos = _cursoRepository.GetAulas(id);
+        if (!cursos.Any())
+        {
+            return NoContent();
+        }
+
+        return Ok(cursos);
+    }
+
+    [Authorize(Roles = "Administrador")]
     [HttpPut("{id}")]
     [ProducesResponseType(typeof(StackSpot.ErrorHandler.HttpResponse), (int)HttpStatusCode.NoContent)]
     [ProducesResponseType(typeof(StackSpot.ErrorHandler.HttpResponse), (int)HttpStatusCode.BadRequest)]

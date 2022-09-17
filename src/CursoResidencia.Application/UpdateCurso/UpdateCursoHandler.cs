@@ -1,4 +1,4 @@
-﻿using CursoResidencia.Application.Exceptions;
+using CursoResidencia.Application.Exceptions;
 using CursoResidencia.Domain.Context;
 
 namespace CursoResidencia.Application.UpdateCurso;
@@ -28,7 +28,7 @@ public class UpdateCursoHandler : IRequestHandler<UpdateCursoCommand>
         }
 
         _context.Entry(curso).CurrentValues
-            .SetValues(new Curso(curso.Id, request.Nome, curso.DataCadastro, request.DataInicio, request.DataFim, request.Situacao));
+            .SetValues(new Curso(curso.Id, request.Nome, curso.DataCadastro, request.Situacao));
 
         _context.SaveChanges();
 

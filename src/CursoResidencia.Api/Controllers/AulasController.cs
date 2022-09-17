@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace CursoResidencia.Api.Controllers;
 
+[Authorize(Roles = "Administrador")]
 [ApiController]
 [Route("[controller]")]
 public class AulasController : ControllerBase
@@ -20,7 +21,6 @@ public class AulasController : ControllerBase
         _aulaService = aulaService;
     }
 
-    [Authorize(Roles = "Administrador")]
     [HttpPost]
     [ProducesResponseType(typeof(CreateAulaResult), (int)HttpStatusCode.Created)]
     [ProducesResponseType(typeof(StackSpot.ErrorHandler.HttpResponse), (int)HttpStatusCode.BadRequest)]
@@ -38,7 +38,6 @@ public class AulasController : ControllerBase
         }
     }
 
-    [Authorize(Roles = "Administrador")]
     [HttpGet("{id}")]
     [ProducesResponseType(typeof(Aula), (int)HttpStatusCode.OK)]
     [ProducesResponseType(typeof(StackSpot.ErrorHandler.HttpResponse), (int)HttpStatusCode.NotFound)]
@@ -51,33 +50,18 @@ public class AulasController : ControllerBase
         return Ok(aula);
     }
 
-    [Authorize(Roles = "Administrador")]
     [HttpGet]
     [ProducesResponseType(typeof(IEnumerable<Aula>), (int)HttpStatusCode.OK)]
     [ProducesResponseType(typeof(StackSpot.ErrorHandler.HttpResponse), (int)HttpStatusCode.NoContent)]
-    public IActionResult GetAll()
+    public IActionResult GetAll([FromQuery] int cursoId)
     {
-        var aulas = _aulaService.GetAll();
+        var aulas = _aulaService.GetAll(cursoId);
         if (!aulas.Any())
             return NoContent();
 
         return Ok(aulas);
     }
 
-    [Authorize(Roles = "Aluno")]
-    [HttpGet("disponiveis")]
-    [ProducesResponseType(typeof(IEnumerable<Aula>), (int)HttpStatusCode.OK)]
-    [ProducesResponseType(typeof(StackSpot.ErrorHandler.HttpResponse), (int)HttpStatusCode.NoContent)]
-    public IActionResult GetAllAvailable()
-    {
-        var aulas = _aulaService.GetAllAvailable();
-        if (!aulas.Any())
-            return NoContent();
-
-        return Ok(aulas);
-    }
-
-    [Authorize(Roles = "Administrador")]
     [HttpPut("{id}")]
     [ProducesResponseType((int)HttpStatusCode.NoContent)]
     [ProducesResponseType(typeof(StackSpot.ErrorHandler.HttpResponse), (int)HttpStatusCode.BadRequest)]

@@ -24,11 +24,5 @@ public class CursoConfiguration : IEntityTypeConfiguration<Curso>
 
         builder.Property(c => c.DataCadastro)
             .HasColumnType("Date");
-
-        builder.Property(c => c.DataInicio)
-            .IsRequired();
-
-        builder.Property(c => c.DataFim)
-            .IsRequired();
     }
 }

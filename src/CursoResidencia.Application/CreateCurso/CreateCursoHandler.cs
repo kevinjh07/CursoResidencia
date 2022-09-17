@@ -5,19 +5,10 @@ namespace CursoResidencia.Application.CreateCurso;
 
 public class CreateCursoHandler : IRequestHandler<CreateCursoCommand, CreateCursoResult>
 {
-    private readonly ILogger<CreateCursoHandler> _logger;
-    private readonly IMapper _mapper;
-    //private readonly IHelloWorldService _helloWorldService;
     private readonly ApplicationContext _context;
 
-    public CreateCursoHandler(ILogger<CreateCursoHandler> logger,
-                                    IMapper mapper/*,
-                                    IHelloWorldService helloWorldService*/,
-                                    ApplicationContext context)
+    public CreateCursoHandler(ApplicationContext context)
     {
-        _logger = logger;
-        _mapper = mapper;
-        //_helloWorldService = helloWorldService;
         _context = context;
     }
 
@@ -32,7 +23,7 @@ public class CreateCursoHandler : IRequestHandler<CreateCursoCommand, CreateCurs
         if (CursoExiste(request.Nome))
             throw new UnprocessableEntityException("Já existe um curso cadastrado com este nome");
 
-        var curso = new Curso(request.Nome, request.DataInicio, request.DataFim);
+        var curso = new Curso(request.Nome);
 
         _context.Cursos.Add(curso);
         _context.SaveChanges();
