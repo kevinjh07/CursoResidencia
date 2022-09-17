@@ -18,10 +18,10 @@ public class CursoService : ICursoService
         return _context.Cursos.ToList();
     }
 
-    public IEnumerable<CursoDto> GetAulas(int id)
+    public CursoDto? GetAulas(int id)
     {
         return _context.Cursos
-            .Where(c => c.Situacao == Situacao.Ativo)
+            .Where(c => c.Id == id && c.Situacao == Situacao.Ativo)
             .Select(c => new CursoDto()
             {
                 Id = c.Id,
@@ -38,8 +38,7 @@ public class CursoService : ICursoService
                         LinkVideo = a.LinkVideo
                     })
                     .ToList()
-            })
-            .ToList();
+            }).SingleOrDefault();
     }
 
     public Curso? GetById(int id)

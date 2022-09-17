@@ -94,17 +94,17 @@ public class CursosController : ControllerBase
 
     [Authorize(Roles = "Aluno")]
     [HttpGet("{id}/aulas")]
-    [ProducesResponseType(typeof(IEnumerable<CursoDto>), (int)HttpStatusCode.OK)]
+    [ProducesResponseType(typeof(CursoDto), (int)HttpStatusCode.OK)]
     [ProducesResponseType(typeof(StackSpot.ErrorHandler.HttpResponse), (int)HttpStatusCode.NoContent)]
     public IActionResult GetDisponiveis([FromRoute] int id)
     {
-        var cursos = _cursoRepository.GetAulas(id);
-        if (!cursos.Any())
+        var curso = _cursoRepository.GetAulas(id);
+        if (curso == null)
         {
-            return NoContent();
+            return NotFound();
         }
 
-        return Ok(cursos);
+        return Ok(curso);
     }
 
     [Authorize(Roles = "Administrador")]

@@ -13,9 +13,6 @@ public class ApplicationContext : IdentityDbContext<IdentityUser<int>, IdentityR
     public DbSet<Professor> Professores { get; set; }
     public DbSet<Aluno> Alunos { get; set; }
     public DbSet<Aula> Aulas { get; set; }
-    public DbSet<CursoAula> CursoAulas { get; set; }
-    public DbSet<Simulado> Simulados { get; set; }
-    public DbSet<SimuladoQuestaoProva> SimuladoQuestoesProva { get; set; }
 
     public ApplicationContext(DbContextOptions<ApplicationContext> options)
         : base(options)
@@ -28,14 +25,8 @@ public class ApplicationContext : IdentityDbContext<IdentityUser<int>, IdentityR
         builder.ApplyConfiguration(new CursoConfiguration());
         builder.ApplyConfiguration(new ModuloConfiguration());
         builder.ApplyConfiguration(new ProfessorConfiguration());
-        builder.ApplyConfiguration(new CursoAulaConfiguration());
         builder.ApplyConfiguration(new AlunoConfiguration());
         builder.ApplyConfiguration(new AulaConfiguration());
-        builder.ApplyConfiguration(new QuestaoProvaConfiguration());
-        builder.ApplyConfiguration(new SimuladoConfiguration());
-        builder.ApplyConfiguration(new RespostaQuestaoSimuladoConfiguration());
         builder.ApplyConfiguration(new ApplicationUserConfiguration());
-        builder.ApplyConfiguration(new PodcastConfiguration());
-        builder.ApplyConfiguration(new SimuladoQuestaoProvaConfiguration());
     }
 }
