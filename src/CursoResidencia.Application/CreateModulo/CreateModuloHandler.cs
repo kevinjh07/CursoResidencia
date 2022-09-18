@@ -1,4 +1,4 @@
-﻿using CursoResidencia.Application.Exceptions;
+using CursoResidencia.Application.Exceptions;
 using CursoResidencia.Domain.Context;
 
 namespace CursoResidencia.Application.CreateModulo;
@@ -14,7 +14,7 @@ public class CreateModuloHandler : IRequestHandler<CreateModuloCommand, CreateMo
 
     public Task<CreateModuloResult> Handle(CreateModuloCommand request, CancellationToken cancellationToken)
     {
-        ValidarModulo(request.Nome);
+        ValidarModulo(request);
         ValidarCurso(request.CursoId);
 
         var modulo = new Modulo(request.Nome, request.CursoId);
@@ -24,12 +24,13 @@ public class CreateModuloHandler : IRequestHandler<CreateModuloCommand, CreateMo
         return Task.FromResult(new CreateModuloResult(modulo));
     }
 
-    private void ValidarModulo(string nome)
+    private void ValidarModulo(CreateModuloCommand command)
     {
-        var moduloExiste = _context.Modulos.Any(m => m.Nome.Trim().ToUpper().Equals(nome.Trim().ToUpper()));
+        var moduloExiste = _context.Modulos
+            .Any(m => m.Nome.Trim().ToUpper().Equals(command.Nome.Trim().ToUpper()) && m.CursoId == command.CursoId);
         if (moduloExiste)
         {
-            throw new UnprocessableEntityException("Já existe um módulo cadastrado com este nome!");
+            throw new UnprocessableEntityException("Já existe um módulo cadastrado com este nome e curso!");
         }
     }
 
