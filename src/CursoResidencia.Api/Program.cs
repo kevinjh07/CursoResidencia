@@ -128,7 +128,6 @@ static async Task SeedDatabase(WebApplication app)
 {
     using var scope = app.Services.CreateScope();
     var context = scope.ServiceProvider.GetRequiredService<ApplicationContext>();
-    context.Database.EnsureCreated();
     context.Database.Migrate();
 
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
